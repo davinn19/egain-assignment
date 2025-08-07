@@ -3,6 +3,7 @@ class DialogNode:
     def __init__(self, prompt: str):
         self.prompt = prompt
 
+    # Displays the chatbot's spiel and any available options to the user
     def print_prompt(self):
         print(self.prompt)
     
@@ -34,7 +35,7 @@ class ConfirmDialogNode(DialogNode):
     no_inputs: set[str] = {"n", "no"}
 
     def __init__(self, prompt: str):
-        super.__init__(self, prompt)
+        super().__init__(prompt)
     
     # Like regular print prompt but with a yes/no thing at the end
     def print_prompt(self):
@@ -59,12 +60,12 @@ class ConfirmDialogNode(DialogNode):
 # Dialog node for multiple options
 class OptionsDialogNode(DialogNode):
     def __init__(self, prompt: str, options: list[str]):
-        super.__init__(self, prompt)
+        super().__init__(prompt)
         self.options = options
 
     # Displays available options in a numbered format after the prompt
     def print_prompt(self):
-        super.print_prompt()
+        print(self.prompt)
         for i in range(len(self.options)):
             print("({}) {}".format(i + 1, self.options[i]))
         pass
@@ -79,8 +80,8 @@ class OptionsDialogNode(DialogNode):
     
     pass
 
-
 if __name__ == "__main__":
+    # Defining the different dialog nodes
     intro_node = ConfirmDialogNode(
         "Hi! I'm Davin, a chatbot designed to find your perfect laptop. Would you like my assistance"
     )
@@ -95,5 +96,14 @@ if __name__ == "__main__":
         ["Office Work", "Web Surfing", "Gaming", "Video Editing", "CAD"]
     )
 
+
+    # Start the conversation
+    user_needs_help = intro_node.execute()
+
+    if user_needs_help == False:
+        quit(0)
+    
+    budget = budget_node.execute()
+    use_case = use_case_node.execute()
 
     pass
