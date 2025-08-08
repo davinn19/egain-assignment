@@ -22,7 +22,7 @@ class DialogNode:
             print("")
             print("Sorry, I couldn't understand your response. Please try again.")
             self.print_prompt()
-            user_input: str = input()
+            user_input = input()
         pass
 
         return user_input
@@ -138,6 +138,10 @@ if __name__ == "__main__":
         "No worries!"
     )
 
+    no_budget_node = ExitDialogNode(
+        "Sorry, I couldn't find a laptop within your budget."
+    )
+
     recommend_node = ExitDialogNode(
         "Sorry, I couldn't find a laptop within your budget."
     )
@@ -149,15 +153,26 @@ if __name__ == "__main__":
         early_exit_node.execute()
     
     budget = budget_node.execute()
+
+    # Check if there are laptops that fit the budget
+    max_price = 250 * budget
+    if max_price > 1000:
+        max_price = -1
+
+    laptop_in_budget = max_price == -1
+    for laptop in laptops:
+        if laptop.price <= max_price:
+            laptop_in_budget = True
+            break
+
+    if laptop_in_budget == False:
+        no_budget_node.execute()
+
     use_case = use_case_node.execute()
 
     # Find best laptop matching criteria
     best_laptop: Laptop = None
     best_laptop_score = 0
-
-    max_price = 250 * budget
-    if max_price > 1000:
-        max_price = -1
 
     for laptop in laptops:
         # Price must be within budget
