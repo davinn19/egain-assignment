@@ -13,12 +13,14 @@ class DialogNode:
     
     def execute(self):
         # Display the prompt and get the user's input for the first time
+        print("")
         self.print_prompt()
         user_input: str = input()
 
         # Repeat as long as the input is invalid
         while (self.is_valid_input(user_input) == False):
-            print("Sorry, I didn't recognize your input. Please try again.")
+            print("")
+            print("Sorry, I couldn't understand your response. Please try again.")
             self.print_prompt()
             user_input: str = input()
         pass
@@ -39,7 +41,7 @@ class ConfirmDialogNode(DialogNode):
     
     # Like regular print prompt but with a yes/no thing at the end
     def print_prompt(self):
-        print(self.prompt)
+        super().print_prompt()
         print("[Y]es / [N]o")
     
     # Input must be some version of yes/no
@@ -65,7 +67,7 @@ class OptionsDialogNode(DialogNode):
 
     # Displays available options in a numbered format after the prompt
     def print_prompt(self):
-        print(self.prompt)
+        super().print_prompt()
         for i in range(len(self.options)):
             print("({}) {}".format(i + 1, self.options[i]))
         pass
