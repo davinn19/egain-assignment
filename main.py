@@ -29,6 +29,19 @@ class DialogNode:
 
     pass
 
+# Dialog node that exits conversation after user input
+class ExitNode(DialogNode):
+    def __init__(self, prompt: str):
+        self.prompt = prompt
+    
+    # Displays prompt and instructions to end convo
+    def print_prompt(self):
+        print(self.prompt)
+        print("Press Enter to end the conversation.")
+    
+    def execute(self):
+        super().execute()
+        quit(0)
 
 # Dialog node for yes/no options
 class ConfirmDialogNode(DialogNode):
@@ -121,11 +134,19 @@ if __name__ == "__main__":
         ["Office Work", "Web Surfing", "Gaming", "Video Editing"]
     )
 
+    early_exit_node = ExitNode(
+        "No worries!"
+    )
+
+    recommend_node = ExitNode(
+        "Sorry, I couldn't find a laptop within your budget."
+    )
+
     # Start the conversation
     user_needs_help = intro_node.execute()
 
     if user_needs_help == False:
-        quit(0)
+        early_exit_node.execute()
     
     budget = budget_node.execute()
     use_case = use_case_node.execute()
@@ -159,9 +180,8 @@ if __name__ == "__main__":
             best_laptop_score = score
 
     # Display recommendation if necessary
-    if best_laptop == None:
-        print("Sorry, I couldn't find a laptop within your budget.")
-    else:
-        print("Based on your responses, I recommend the {}.".format(best_laptop.name))
-
+    if best_laptop != None:
+        recommend_node.prompt = "Based on your responses, I recommend the {}.".format(best_laptop.name)
+    
+    recommend_node.execute()
     pass
