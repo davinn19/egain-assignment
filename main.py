@@ -156,8 +156,9 @@ if __name__ == "__main__":
             best_laptop = laptop
             best_laptop_score = score
 
+    # Display recommendation if necessary
     if best_laptop == None:
-        print("Sorry, we could not find a laptop within your budget.")
+        print("Sorry, I couldn't find a laptop within your budget.")
     else:
         print("Based on your responses, I recommend the {}.".format(best_laptop.name))
 
