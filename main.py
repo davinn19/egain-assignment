@@ -64,7 +64,7 @@ class ConfirmDialogNode(DialogNode):
     
     # Runs the dialog as normal but returns a 0 for no and 1 for yes
     def execute(self):
-        result: str = super().execute()
+        result: str = super().execute().lower()
         if result in self.yes_inputs:
             return 1
         return 0
@@ -167,9 +167,9 @@ if __name__ == "__main__":
         # Use laptop specs for score
         score = 0
         if use_case == 1:
-            score = laptop.weight
+            score = laptop.battery_life
         elif use_case == 2:
-            score = laptop.price
+            score = laptop.screen_tier
         elif use_case == 3:
             score = laptop.processing_tier
         else:
