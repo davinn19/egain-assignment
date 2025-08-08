@@ -30,13 +30,13 @@ class DialogNode:
     pass
 
 # Dialog node that exits conversation after user input
-class ExitNode(DialogNode):
+class ExitDialogNode(DialogNode):
     def __init__(self, prompt: str):
         self.prompt = prompt
     
     # Displays prompt and instructions to end convo
     def print_prompt(self):
-        print(self.prompt)
+        super().print_prompt()
         print("Press Enter to end the conversation.")
     
     def execute(self):
@@ -134,11 +134,11 @@ if __name__ == "__main__":
         ["Office Work", "Web Surfing", "Gaming", "Video Editing"]
     )
 
-    early_exit_node = ExitNode(
+    early_exit_node = ExitDialogNode(
         "No worries!"
     )
 
-    recommend_node = ExitNode(
+    recommend_node = ExitDialogNode(
         "Sorry, I couldn't find a laptop within your budget."
     )
 
